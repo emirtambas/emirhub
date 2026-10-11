@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Emir Hub">
+  <meta name="theme-color" content="#ffffff">
+  <title>Emir Hub | Lojistik & Spor Portalı</title>
+
+  <style>
+    /* =========================================================
+       CSS THEMES: AYDINLIK MOD & GECE MODU
+       ========================================================= */
+
+    /* 1. AYDINLIK MOD (FERAH İSKANDİNAV BEYAZI - VARSAYILAN) */
+    :root[data-theme="light"], :root[data-theme="nordic"], :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-card: #ffffff;
+      --card-border: #e2e8f0;
+      --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --item-bg: #f8fafc;
+      --item-border: #e2e8f0;
+      --primary: #0284c7;
+      --primary-glow: rgba(2, 132, 199, 0.15);
+      --accent: #10b981;
+      --warning: #d97706;
+      --danger: #ef4444;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --widget-hero: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      --hero-border: #38bdf8;
+      --quiz-card-bg: linear-gradient(135deg, #fefce8 0%, #ffffff 100%);
+      --burs-card-bg: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+      --news-card-bg: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+      --btn-text: #ffffff;
+      --btn-bg: #0284c7;
+      --btn-secondary-bg: #f1f5f9;
+      --btn-secondary-text: #0f172a;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+    }
+
+    /* 2. GECE MODU (SİBER KOYU - KLASİK) */
+    :root[data-theme="dark"], :root[data-theme="cyber"] {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-card: #18233c;
+      --card-border: #263554;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      --item-bg: rgba(0, 0, 0, 0.25);
+      --item-border: #263554;
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.25);
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --widget-hero: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      --hero-border: #38bdf8;
+      --quiz-card-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
+      --burs-card-bg: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
+      --news-card-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%);
+      --btn-text: #090d16;
+      --btn-bg: #38bdf8;
+      --btn-secondary-bg: rgba(255, 255, 255, 0.08);
+      --btn-secondary-text: #f8fafc;
+      --input-bg: rgba(0, 0, 0, 0.25);
+      --input-border: #263554;
+    }
+* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* SIDEBAR NAVIGATION */
+    .sidebar {
+      width: 270px;
+      background: var(--surface);
+      border-right: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      padding: 24px 16px;
+      z-index: 20;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      padding: 0 10px 20px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 18px;
+    }
+
+    .brand-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+
+    .nav-btn:hover {
+      background: var(--item-bg);
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      background: var(--surface-card);
+      border-color: var(--card-border);
+      color: var(--primary);
+      box-shadow: var(--card-shadow);
+    }
+
+    .nav-btn .icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    /* THEME SWITCHER BUTTON */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: auto;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+    }
+
+    /* MAIN CONTENT */
+    .main-content {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    /* MOBILE BOTTOM NAV */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: var(--surface);
+      border-top: 1px solid var(--card-border);
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px 10px calc(6px + env(safe-area-inset-bottom, 0px));
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1;
+      gap: 2px;
+    }
+
+    .bottom-nav-item .b-icon {
+      font-size: 1.25rem;
+    }
+
+    .bottom-nav-item.active {
+      color: var(--primary);
+    }
+
+    /* MOBILE TOP BAR */
+    .mobile-top-bar {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    /* CARDS & GRIDS */
+    .card {
+      background: var(--surface-card);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      color: var(--text);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .page-heading {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* SUB-NAVIGATION TABS (İÇ KALEMLER / AYRI SEKMELER) */
+    .subnav-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .subnav-tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: var(--item-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .subnav-tab-btn:hover {
+      color: var(--text);
+    }
+
+    .subnav-tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--btn-secondary-bg);
+      color: var(--btn-secondary-text);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-source {
+      background: rgba(16, 185, 129, 0.12);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-source:hover {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .btn-success {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      border-radius: 8px;
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-primary {
+      background: rgba(2, 132, 199, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-success {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* COURSE ITEMS */
+    .course-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
+      gap: 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      background: var(--item-bg);
+      border: 1px solid var(--item-border);
+    }
+
+    .course-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .day-pill {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-sali { background: rgba(56, 189, 248, 0.15); color: #0284c7; }
+    .pill-carsamba { background: rgba(168, 85, 247, 0.15); color: #7c3aed; }
+    .pill-persembe { background: rgba(234, 179, 8, 0.15); color: #b45309; }
+    .pill-cuma { background: rgba(34, 197, 94, 0.15); color: #15803d; }
+
+    /* INPUTS */
+    input[type="text"], input[type="number"], input[type="datetime-local"], select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary-glow);
+    }
+
+    .set-row {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 40px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    /* COUNTDOWN DIGITS */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .countdown-box {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .countdown-num {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .countdown-label {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      right: 24px;
+      background: #0f172a;
+      border: 1px solid var(--primary);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 500px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .sidebar { width: 230px; padding: 20px 12px; }
+      .main-content { padding: 18px; }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .bottom-nav { display: flex; }
+      .mobile-top-bar { display: flex; }
+      .main-content {
+        padding: 16px 14px 84px 14px;
+      }
+      .grid-3 { grid-template-columns: 1fr; }
+      .top-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .page-heading { font-size: 1.3rem; }
+      .countdown-num { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MOBILE TOP BAR -->
+  <header class="mobile-top-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span style="font-size: 1.4rem;">⚡</span>
+      <span style="font-weight: 800; font-size: 1.1rem; color: var(--primary);">EMİR HUB v5.2 🚀</span>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="toggleTheme()" id="mobileThemeBtn" title="Temayı Değiştir">
+      🎨 Tema Değiştir
+    </button>
+  </header>
+
+  <div class="app-container">
+    
+    <!-- DESKTOP / TABLET SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-title">
+          <span>⚡</span>
+          <span>EMİR HUB v5.2 🚀</span>
+        </div>
+        <div class="brand-sub">Ankara Üniv. • Lojistik Yönetimi (2. Sınıf)</div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-btn active" onclick="switchTab('dashboard', this)">
+          <span class="icon">⚡</span>
+          <span>Hızlı Özet</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('courses', this)">
+          <span class="icon">📚</span>
+          <span>Dersler & Notlar</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('academic', this)">
+          <span class="icon">🎯</span>
+          <span>Akademik Takip</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('sport', this)">
+          <span class="icon">🏋️‍♂️</span>
+          <span>Spor Takibi</span>
+        </button>
+      </nav>
+
+      <!-- THEME SWITCHER -->
+      <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--card-border);">
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 700; text-transform: uppercase;">
+          Arayüz Teması
+        </div>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="sidebarThemeBtn">
+          <span id="themeBtnLabel">☀️ İskandinav Aydınlık</span>
+          <span style="font-size: 1.1rem;">🔄</span>
+        </button>
+        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px; line-height: 1.3;">
+          İskandinav Aydınlık, Güneşli Kampüs, Ferah Nane ve Gece Modu arasında tek tıkla geçiş yapın.
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="main-content">
+
+      <!-- =========================================================
+           TAB 1: HIZLI ÖZET (DASHBOARD & GENEL BAKIŞ)
+           ========================================================= -->
+      <section id="tab-dashboard" class="tab-pane">
+        
+        <div class="top-bar">
+          <div>
+            <h1 class="page-heading">
+              <span>⚡</span>
+              <span>Hızlı Özet & Gösterge Paneli</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Ders durumu, sınav sayaçları ve günün kritik bildirimleri.
+            </p>
+          </div>
+          
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <a href="https://drive.google.com/drive/folders/1zGownBbhvEktZpOa1P9478fpt0o1nUxG" target="_blank" class="btn btn-secondary btn-sm">
+              📂 Ana Drive Klasörü ↗
+            </a>
+            <a href="https://ekampus.ankara.edu.tr" target="_blank" class="btn btn-secondary btn-sm">
+              🌐 ekampus Portali ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- HERO WIDGET: AKILLI DERS & SIRADAKİ DERS -->
+        <div class="card" style="background: var(--widget-hero); border: 2px solid var(--hero-border); margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.3rem;">🎓</span>
+              <span id="classWidgetHeader" style="font-weight: 800; font-size: 1.05rem; letter-spacing: 0.05em; color: var(--primary); text-transform: uppercase;">
+                DERS PROGRAMI & DURUM
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span id="currentClockDisplay" class="badge badge-primary">--:--</span>
+              <span id="todayDayBadge" class="badge badge-warning">Yükleniyor...</span>
+            </div>
+          </div>
+
+          <div id="smartClassContent">
+            <!-- JS dynamically injects content -->
+          </div>
+        </div>
+
+        <!-- 3'LÜ HIZLI ÖZET WIDGET DİZİLİMİ -->
+        <div class="grid-3">
+          
+          <!-- WIDGET A: SINAV & QUIZ GERİ SAYIMI -->
+          <div class="card" style="background: var(--quiz-card-bg); border-top: 3px solid var(--primary);">
+            <div class="card-header">
+              <div class="card-title" style="color: var(--primary);">
+                <span>🎯</span>
+                <span>Sınav & Quiz Takip</span>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="openAddExamModal()" style="padding: 4px 8px; font-size: 0.75rem;">
+                + Ekle
+              </button>
+            </div>
+
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+              Quiz ve sınavlar için canlı geri sayım sayaçları.
+            </p>
+
+            <div id="activeExamsContainer" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- JS generates countdown cards -->
+            </div>
+          </div>
+
+          <!-- WIDGET B: BURSLAR & BAŞVURULAR -->
+          <div class="card" style="background: var(--burs-card-bg); border-top: 3px solid var(--accent);">
+            <div class="card-header">
+              <div class="card-title" style="color: var(--accent);">
+                <span>🎓</span>
+                <span>Burslar & Başvurular</span>
+              </div>
+              <span class="badge badge-success">Aktif</span>
+            </div>
+
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">
+              Son başvuru tarihleri ve form bağlantıları.
+            </p>
+
+            <div id="dashboardBursWidgetContainer" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Google Sheets & Default Burs cards -->
+            </div>
+          </div>
+
+          <!-- WIDGET C: KISAYOLLAR & HIZLI NOTLAR -->
+          <div class="card" style="border-top: 3px solid var(--warning);">
+            <div class="card-header">
+              <div class="card-title">
+                <span>📊</span>
+                <span>Kısayollar & Notlar</span>
+              </div>
+              <span id="dashboardSyncStatus" class="badge badge-success">Canlı Bağlantı</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="background: var(--item-bg); border: 1px solid var(--item-border); padding: 10px 12px; border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="font-size: 0.88rem;">E-Tablo Veri Merkezi</strong>
+                  <a href="https://docs.google.com/spreadsheets/d/1cHBSpX06AzC2P0nd1MnybPT3V1V2zz2Ew5aCA70-YAU/edit" target="_blank" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">
+                    Düzenle ↗
+                  </a>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+                  Burslar ve duyurular tablodan anlık beslenir.
+                </div>
+              </div>
+
+              <!-- GOOGLE FORM İLE GEMİNİ OTONOM GÖREV KÖPRÜSÜ -->
+              <div style="margin-top: 4px; background: var(--item-bg); border: 1px solid var(--item-border); border-radius: 12px; padding: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <strong style="font-size: 0.85rem; color: var(--primary);">📋 Gemini'ye Görev Ver (Google Form)</strong>
+                  <button class="btn btn-secondary btn-sm" onclick="openFormSettings()" style="padding: 2px 8px; font-size: 0.72rem;" title="Form Linki Ayarla">⚙️ Form Linki</button>
+                </div>
+                
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" id="geminiTaskInput" placeholder="Örn: İktisat 2. hafta slaytlarını özetle...">
+                  <button class="btn btn-sm" onclick="sendTaskViaGoogleForm()" style="padding: 6px 14px;">Gönder 🚀</button>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.75rem; color: var(--text-muted);">
+                  <span>Google Form bildirimiyle Gemini doğrudan uyanır.</span>
+                  <a href="https://docs.google.com/forms/d/1j3NMW3oALC-8KsKOqaqCVe7gN671LuvIQcEHZ4QFHdo/viewform" target="_blank" id="openDirectFormBtn" style="color: var(--primary); text-decoration: none; font-weight: 600;">Formu Aç ↗</a>
+                </div>
+              </div>
+
+              <!-- YEREL NOT ALMA KUTUSU -->
+              <div style="margin-top: 4px;">
+                <div style="display: flex; gap: 6px;">
+                  <input type="text" id="quickNoteInput" placeholder="Hızlı kişisel not yaz...">
+                  <button class="btn btn-secondary btn-sm" onclick="addQuickNote()" style="padding: 6px 12px;">Not Et</button>
+                </div>
+                <div id="quickNotesPreview" style="margin-top: 6px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.3;">
+                  <!-- latest notes -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 2: DERSLER & NOTLAR (DERS PROGRAMI + DRİVE + NOTLAR)
+           ========================================================= -->
+      <section id="tab-courses" class="tab-pane" style="display: none;">
+        
+        <div class="top-bar">
+          <div>
+            <h1 class="page-heading">
+              <span>📚</span>
+              <span>Dersler & Notlar</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Haftalık ders programı, Google Drive klasörleri ve ders içi hatırlatıcılar.
+            </p>
+          </div>
+          <a href="https://drive.google.com/drive/folders/1zGownBbhvEktZpOa1P9478fpt0o1nUxG" target="_blank" class="btn btn-secondary">
+            📂 Ana Drive Klasörünü Aç ↗
+          </a>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Haftalık Ders Takvimi & Materyal Klasörleri</div>
+            <span class="badge badge-primary">Pazartesi: Boş Gün</span>
+          </div>
+
+          <!-- SALI -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-sali">Salı • 13:00 - 17:00</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">Pazarlama İlkeleri</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Doç. Dr. Hakan Kaçak • Sınıf: 201
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1GP9k_lxwe81zrbiGZWorSCCKoyWUCB61" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- ÇARŞAMBA 1 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-carsamba">Çarşamba • 09:30 - 13:00</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">İşletme Finansmanı</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Doç. Dr. İlkur Elif Kandil Göker • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1lTZGnbadvyiIL0zxHXzSofOQPGBbtHzI" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- ÇARŞAMBA 2 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-carsamba">Çarşamba • 14:00 - 17:00</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">Ulaştırma ve Lojistik Terminolojisi</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Dr. Öğr. Üyesi Bükre Doğaner • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1zs-HQVxWwwrznzUs2LBND0kJxPN8cPhS" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- PERŞEMBE 1 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-persembe">Perşembe • 10:30 - 12:30</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">Uluslararası İktisat I</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Dr. Öğr. Üyesi Duhan Kalkan • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1Kw2S1dBHIP6bwhRiF8_6_CbpbqQaIeDd" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- PERŞEMBE 2 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-persembe">Perşembe • 13:00 - 17:00</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">İstatistik I</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Dr. Öğr. Üyesi Sinem Kozpınar • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1HGq8fCSVxbRtKkQBWNAy8G2MmfO0fllW" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- CUMA 1 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-cuma">Cuma • 09:30 - 12:30</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">İktisadi Sistemler, Kurumlar ve Piyasalar</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Doç. Dr. Nadide Gülbay Yiğiteli • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/1iKTxH_VmuTPFLoOU2pm8ueAT_p-0Ei3N" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+          <!-- CUMA 2 -->
+          <div class="course-item">
+            <div>
+              <span class="day-pill pill-cuma">Cuma • 14:00 - 17:00</span>
+              <div style="font-size: 1.1rem; font-weight: 700;">Borçlar Hukuku</div>
+              <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 3px;">
+                Doç. Dr. Yıldız Abik • Sınıf: 203
+              </div>
+            </div>
+            <a href="https://drive.google.com/drive/folders/12e6RYKkAKxPrgAyJUdnMaMdFkeaesUSX" target="_blank" class="btn btn-secondary btn-sm">
+              📁 Slayt Klasörünü Aç ↗
+            </a>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 3: AKADEMİK TAKİP (SINAVLAR, BURSLAR, LOJİSTİK HABERLERİ)
+           ========================================================= -->
+      <section id="tab-academic" class="tab-pane" style="display: none;">
+        
+        <div class="top-bar">
+          <div>
+            <h1 class="page-heading">
+              <span>🎯</span>
+              <span>Akademik Takip Portalı</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Sınavlar, burs başvuruları ve küresel lojistik sektörü gündemi tek çatı altında.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 8px;">
+            <button class="btn" onclick="openAddExamModal()">+ Sınav / Quiz Ekle</button>
+            <a href="https://ekampus.ankara.edu.tr" target="_blank" class="btn btn-secondary">
+              🌐 ekampus Portali ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- AYRI KALEMLER İÇİN SEKME GEZİNTİSİ (SUB-TABS) -->
+        <div class="subnav-tabs">
+          <button class="subnav-tab-btn active" onclick="switchAcademicSubTab('exams-sub', this)">
+            <span>📝</span>
+            <span>Sınavlar & Quizler</span>
+          </button>
+          <button class="subnav-tab-btn" onclick="switchAcademicSubTab('burs-sub', this)">
+            <span>🎓</span>
+            <span>Burslar & Başvurular</span>
+          </button>
+          <button class="subnav-tab-btn" onclick="switchAcademicSubTab('news-sub', this)">
+            <span>🌐</span>
+            <span>Global Lojistik Gündemi</span>
+          </button>
+        </div>
+
+        <!-- KALEM 1: SINAVLAR VE QUİZLER -->
+        <div id="sub-academic-exams-sub" class="academic-sub-pane">
+          <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-size: 1.15rem; font-weight: 800;">📝 Aktif ve Yaklaşan Sınavlar</h2>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Her haberin altında resmi kaynak bağlantısı bulunur</span>
+          </div>
+          <div id="allExamsFullList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+            <!-- Dynamically populated with Sınava Git + Kaynak buttons -->
+          </div>
+        </div>
+
+        <!-- KALEM 2: BURSLAR VE BAŞVURULAR -->
+        <div id="sub-academic-burs-sub" class="academic-sub-pane" style="display: none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>🎓</span>
+                <span>Aktif Burs Programları & Duyurular</span>
+              </div>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <span id="syncIndicator" style="font-size: 0.82rem; color: var(--text-muted);">🔄 Kontrol ediliyor...</span>
+                <button class="btn btn-secondary btn-sm" onclick="fetchSheetData()">🔄 Yenile</button>
+                <a href="https://docs.google.com/spreadsheets/d/1cHBSpX06AzC2P0nd1MnybPT3V1V2zz2Ew5aCA70-YAU/edit" target="_blank" class="btn btn-secondary btn-sm">📊 E-Tablo ↗</a>
+              </div>
+            </div>
+            
+            <div id="liveAnnouncementsContainer">
+              <!-- Live sheet announcements -->
+            </div>
+          </div>
+        </div>
+
+        <!-- KALEM 3: GLOBAL LOJİSTİK GÜNDEMİ & GELİŞMELER -->
+        <div id="sub-academic-news-sub" class="academic-sub-pane" style="display: none;">
+          <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h2 style="font-size: 1.15rem; font-weight: 800;">🌐 Küresel Lojistik & Tedarik Zinciri Raporu</h2>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+                Lojistik Yönetimi bölümü için global ticaret koridorları, yeşil lojistik ve teknoloji trendleri (E-Tablo canlı bağlantılı).
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span id="newsSyncIndicator" style="font-size: 0.82rem; color: var(--text-muted);">🔄 Canlı Veri</span>
+              <button class="btn btn-secondary btn-sm" onclick="fetchLogisticsNews()">🔄 Yenile</button>
+              <a href="https://docs.google.com/spreadsheets/d/1cHBSpX06AzC2P0nd1MnybPT3V1V2zz2Ew5aCA70-YAU/edit" target="_blank" class="btn btn-secondary btn-sm">📊 E-Tablo ↗</a>
+            </div>
+          </div>
+
+          <div id="liveNewsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+            <!-- Canlı E-Tablo verisi veya çevrim dışı yedek haberler dinamik yüklenir -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================================================
+           TAB 4: SPOR TAKİBİ (BİRLEŞTİRİLMİŞ: ANTRENMAN + FORM REHBERİ)
+           ========================================================= -->
+      <section id="tab-sport" class="tab-pane" style="display: none;">
+        
+        <div class="top-bar">
+          <div>
+            <h1 class="page-heading">
+              <span>🏋️‍♂️</span>
+              <span>Spor Takibi Portalı</span>
+            </h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">
+              Antrenman günlüğü, set kayıtları ve egzersiz form rehberi tek çatı altında.
+            </p>
+          </div>
+        </div>
+
+        <!-- AYRI KALEMLER İÇİN SEKME GEZİNTİSİ (SUB-TABS) -->
+        <div class="subnav-tabs">
+          <button class="subnav-tab-btn active" onclick="switchSportSubTab('workout-sub', this)">
+            <span>🏋️‍♂️</span>
+            <span>Antrenman Takibi</span>
+          </button>
+          <button class="subnav-tab-btn" onclick="switchSportSubTab('guide-sub', this)">
+            <span>📖</span>
+            <span>Egzersiz Form Rehberi</span>
+          </button>
+        </div>
+
+        <!-- KALEM 1: ANTRENMAN TAKİPÇİSİ -->
+        <div id="sub-sport-workout-sub" class="sport-sub-pane">
+          <div class="grid-2">
+            
+            <div class="card">
+              <div class="card-title" style="margin-bottom: 16px;">Yeni Egzersiz Ekle</div>
+              
+              <div style="margin-bottom: 14px;">
+                <label style="font-size: 0.82rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Egzersiz</label>
+                <select id="exerciseInput">
+                  <option value="Bench Press (Barbell)">Bench Press (Barbell)</option>
+                  <option value="Squat (Barbell)">Squat (Barbell)</option>
+                  <option value="Deadlift">Deadlift</option>
+                  <option value="Overhead Press (OHP)">Overhead Press (OHP)</option>
+                  <option value="Incline Dumbbell Press">Incline Dumbbell Press</option>
+                  <option value="Barbell Row">Barbell Row</option>
+                  <option value="Lat Pulldown">Lat Pulldown</option>
+                  <option value="Lateral Raise">Lateral Raise (Omuz)</option>
+                  <option value="Biceps Barbell Curl">Biceps Barbell Curl</option>
+                  <option value="Triceps Cable Pushdown">Triceps Cable Pushdown</option>
+                  <option value="Leg Press">Leg Press</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 0.85rem; font-weight: 600;">Setler</span>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="addNewSetRow()">+ Set Ekle</button>
+                </div>
+                <div id="dynamicSetsContainer"></div>
+              </div>
+
+              <div style="margin-bottom: 16px;">
+                <label style="font-size: 0.82rem; color: var(--text-muted); display: block; margin-bottom: 6px;">Not</label>
+                <input type="text" id="workoutNoteInput" placeholder="Örn: 3. sette ağırlık çok rahat çıktı">
+              </div>
+
+              <button type="button" class="btn" onclick="saveWorkoutSession()" style="width: 100%;">
+                💾 Antrenmanı Kaydet
+              </button>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Kayıtlı Antrenmanlar</div>
+                <button class="btn btn-danger btn-sm" onclick="clearWorkouts()">Tümünü Sil</button>
+              </div>
+              <div id="workoutHistoryView" style="max-height: 480px; overflow-y: auto;"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- KALEM 2: EGZERSİZ FORM REHBERİ -->
+        <div id="sub-sport-guide-sub" class="sport-sub-pane" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+            <span style="font-size: 0.9rem; color: var(--text-muted);">Doğru biyomekanik ipuçları ve kaçınılması gereken hatalar.</span>
+            <input type="text" id="searchGuide" placeholder="🔍 Egzersiz ara..." onkeyup="filterGuide()" style="max-width: 280px;">
+          </div>
+
+          <div class="grid-2" id="guideGrid">
+            <div class="card guide-card" data-name="bench press göğüs">
+              <div class="card-title" style="color: var(--primary);">Barbell Bench Press</div>
+              <div style="font-size: 0.85rem; line-height: 1.6; margin-top: 10px; color: var(--text-muted);">
+                <strong style="color: var(--text);">🎯 Kurulum & İpuçları:</strong><br>
+                • Kürek kemiklerini (scapula) arkada ve aşağıda kenetleyin.<br>
+                • Ayak tabanları yerde sabit, bacak itişi (leg drive) aktif olsun.<br>
+                • Barı göğüs ucuna kontrollü indirin; dirsekler 45-70 derece açıda olmalı.<br>
+                <strong style="color: #ef4444; display: inline-block; margin-top: 8px;">⚠️ Hatalar:</strong><br>
+                • Barı göğüsten zıplatmak, dirsekleri 90 derece yana açmak.
+              </div>
+            </div>
+
+            <div class="card guide-card" data-name="squat bacak kalça">
+              <div class="card-title" style="color: var(--primary);">Barbell Back Squat</div>
+              <div style="font-size: 0.85rem; line-height: 1.6; margin-top: 10px; color: var(--text-muted);">
+                <strong style="color: var(--text);">🎯 Kurulum & İpuçları:</strong><br>
+                • Barı trapezlerin üzerine sağlamca kilitleyin.<br>
+                • Diyafram nefesiyle karın bölgesini 360 derece sıkın (Valsalva).<br>
+                • Dizleri ayak parmak yönünde dışarı açarak kalçayı paralel ve altına indirin.<br>
+                <strong style="color: #ef4444; display: inline-block; margin-top: 8px;">⚠️ Hatalar:</strong><br>
+                • Dizlerin içeriye kapanması, topukların yerden kalkması.
+              </div>
+            </div>
+
+            <div class="card guide-card" data-name="deadlift sırt kalça">
+              <div class="card-title" style="color: var(--primary);">Conventional Deadlift</div>
+              <div style="font-size: 0.85rem; line-height: 1.6; margin-top: 10px; color: var(--text-muted);">
+                <strong style="color: var(--text);">🎯 Kurulum & İpuçları:</strong><br>
+                • Bar ayağın ortasını kessin; kaval kemiğine 2-3 cm mesafede başlayın.<br>
+                • Kalça arkada, göğüs dik ve kanat kasları (lats) kilitli olmalı.<br>
+                • Yeri iterek bara düz bir hat boyunca yükselin; tepe noktada kalçayı sıkın.<br>
+                <strong style="color: #ef4444; display: inline-block; margin-top: 8px;">⚠️ Hatalar:</strong><br>
+                • Belin yuvarlanması, barın bacaklardan uzaklaşması.
+              </div>
+            </div>
+
+            <div class="card guide-card" data-name="overhead press omuz">
+              <div class="card-title" style="color: var(--primary);">Overhead Press (OHP)</div>
+              <div style="font-size: 0.85rem; line-height: 1.6; margin-top: 10px; color: var(--text-muted);">
+                <strong style="color: var(--text);">🎯 Kurulum & İpuçları:</strong><br>
+                • Kalça ve karın kaslarını kilitleyerek belden bükülmeyi engelleyin.<br>
+                • Barı köprücük kemiğinden tavana düz hatta itin; başın hizasını geçince gövdeyi barın altına alın.<br>
+                <strong style="color: #ef4444; display: inline-block; margin-top: 8px;">⚠️ Hatalar:</strong><br>
+                • Belden aşırı yay çizmek, dirseklerin arkaya kaçması.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION (4 BUTONLU YENİ DÜZEN) -->
+    <nav class="bottom-nav">
+      <button class="bottom-nav-item active" onclick="switchTab('dashboard', this)">
+        <span class="b-icon">⚡</span>
+        <span>Özet</span>
+      </button>
+      <button class="bottom-nav-item" onclick="switchTab('courses', this)">
+        <span class="b-icon">📚</span>
+        <span>Dersler</span>
+      </button>
+      <button class="bottom-nav-item" onclick="switchTab('academic', this)">
+        <span class="b-icon">🎯</span>
+        <span>Akademik</span>
+      </button>
+      <button class="bottom-nav-item" onclick="switchTab('sport', this)">
+        <span class="b-icon">🏋️‍♂️</span>
+        <span>Spor</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- MODAL: YENİ SINAV / QUIZ EKLEME -->
+  <div class="modal-overlay" id="addExamModal">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800;">🎯 Yeni Sınav / Quiz Ekle</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeAddExamModal()">✕</button>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Ders Adı</label>
+          <input type="text" id="examCourseInput" placeholder="Örn: YDİ201 Temel Yabancı Dil">
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Sınav / Quiz Başlığı</label>
+          <input type="text" id="examTitleInput" placeholder="Örn: Quiz 2 Unit 2">
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Tarih ve Saat (Bitiş Zamanı)</label>
+          <input type="datetime-local" id="examDeadlineInput">
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Sınav Portali Linki</label>
+          <input type="text" id="examLinkInput" placeholder="https://ekampus.ankara.edu.tr/...">
+        </div>
+        <div>
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">📌 Kaynak Linki (Gmail İletisi veya Duyuru URL'si)</label>
+          <input type="text" id="examSourceInput" placeholder="https://mail.google.com/mail/... veya duyuru linki">
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+          <button class="btn btn-secondary" onclick="closeAddExamModal()">İptal</button>
+          <button class="btn" onclick="saveNewExam()">Kaydet ve Sayacı Başlat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- MODAL: GOOGLE FORM GÖREV KÖPRÜSÜ AYARI -->
+    <!-- MODAL: GOOGLE FORM GÖREV KÖPRÜSÜ AYARI -->
+  <div class="modal-overlay" id="formModal" style="display: none;">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text);">⚡ Tek Tıkla Görev Gönderme Ayarı</h3>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="closeFormSettings()">✕</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+        Form sayfasına hiç yönlendirilmeden, <strong>siteden çıktığınızı bile hissetmeden arka planda sessizce</strong> görevi göndermek için:
+      </p>
+      <ol style="font-size: 0.8rem; color: var(--text-muted); margin-left: 18px; margin-bottom: 14px; line-height: 1.5;">
+        <li><a href="https://docs.google.com/forms/d/1j3NMW3oALC-8KsKOqaqCVe7gN671LuvIQcEHZ4QFHdo/edit" target="_blank" style="color: var(--primary); font-weight: 700;">Form Düzenleme Sayfasını</a> açın.</li>
+        <li>Sağ üstteki <strong>üç noktaya (⋮)</strong> basıp <strong>"Önceden doldurulmuş bağlantı al"</strong> deyin.</li>
+        <li>Soru kutusuna <code>TEST</code> yazıp alttaki <strong>"Bağlantıyı al"</strong> butonuna tıklayın.</li>
+        <li>Kopyalanan o bağlantıyı aşağıdaki kutucuğa yapıştırın:</li>
+      </ol>
+      <div style="margin-bottom: 12px;">
+        <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Önceden Doldurulmuş Form Bağlantısı (URL)</label>
+        <input type="text" id="googleFormUrlInput" placeholder="https://docs.google.com/forms/d/e/.../viewform?usp=pp_url&entry.XXXX=TEST">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
+        <button type="button" class="btn btn-secondary" onclick="closeFormSettings()">İptal</button>
+        <button type="button" class="btn" onclick="saveFormUrl()">Bağlantıyı Kaydet</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="toast">İşlem tamamlandı.</div>
+
+  <!-- JAVASCRIPT MOTORU -->
+  <script>
+    const memoryStore = {};
+
+    function safeGet(key) {
+      try {
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : (memoryStore[key] || null);
+      } catch (e) {
+        return memoryStore[key] || null;
+      }
+    }
+
+    function safeSet(key, val) {
+      memoryStore[key] = val;
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+        /* TEMA YÖNETİMİ: AYDINLIK MOD (VARSAYILAN) & GECE MODU */
+    function initTheme() {
+      let savedTheme = localStorage.getItem('emir_hub_theme') || 'light';
+      if (savedTheme !== 'light' && savedTheme !== 'dark') {
+        savedTheme = (savedTheme === 'cyber') ? 'dark' : 'light';
+      }
+      applyTheme(savedTheme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const nextTheme = (current === 'light') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+      showToast(nextTheme === 'light' ? '☀️ Aydınlık Mod devrede.' : '🌙 Gece Modu devrede.');
+    }
+
+    function applyTheme(themeId) {
+      document.documentElement.setAttribute('data-theme', themeId);
+      localStorage.setItem('emir_hub_theme', themeId);
+      
+      const isLight = (themeId === 'light');
+      const label = document.getElementById('themeBtnLabel');
+      if (label) {
+        label.textContent = isLight ? '☀️ Aydınlık Mod' : '🌙 Gece Modu';
+      }
+      
+      const mobBtn = document.getElementById('mobileThemeBtn');
+      if (mobBtn) {
+        mobBtn.innerHTML = isLight ? '🌙 Gece Modu' : '☀️ Aydınlık Mod';
+      }
+      
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute('content', isLight ? '#ffffff' : '#090d16');
+      }
+    }
+
+    /* ANA MENÜ GEÇİŞİ */
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.bottom-nav-item').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.style.display = 'block';
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId)) {
+          btn.classList.add('active');
+        }
+      });
+
+      document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+        if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(tabId)) {
+          btn.classList.add('active');
+        }
+      });
+
+      document.querySelector('.main-content').scrollTop = 0;
+    }
+
+    /* AKADEMİK TAKİP İÇ SEKMELERİ (SUB-TABS) */
+    
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    const DEFAULT_LOGISTICS_NEWS = [
+      {
+        kategori: 'Deniz Taşımacılığı & Rotalar',
+        baslik: 'Kızıldeniz & Süveyş Hattı Alternatifleri: Ümit Burnu ve Intermodal Hatlar',
+        ozet: 'Asya-Avrupa konteyner hatlarında transit sürelerinin 10-14 gün uzamasıyla DFDS gibi Ro-Ro ve demiryolu entegratörlerinin Türkiye-Avrupa intermodal koridorundaki yük hacimleri rekor seviyelere ulaştı.',
+        tarih: 'Ekim 2026',
+        kaynak: "Lloyd's List & DFDS",
+        link: 'https://www.dfds.com'
+      },
+      {
+        kategori: 'Yeşil Lojistik & Mevzuat',
+        baslik: 'AB Sınırda Karbon Düzenleme Mekanizması (SKDM / CBAM) Geçiş Dönemi',
+        ozet: 'Avrupa Birliği yeşil mutabakatı kapsamında Türk lojistik ve ihracat filolarının emisyon raporlama zorunlulukları artarken, intermodal taşımacılık ve elektrikli çekici yatırımları hız kazandı.',
+        tarih: 'Ekim 2026',
+        kaynak: 'Avrupa Komisyonu & UND',
+        link: 'https://www.und.org.tr'
+      },
+      {
+        kategori: 'Dijital Gümrük & Teknoloji',
+        baslik: 'NCTS Faz-5 Dijital Transit ve Ortak Transit Sözleşmesi Entegrasyonu',
+        ozet: "Ticaret Bakanlığı'nın gümrüklerde devreye aldığı NCTS Faz-5 sistemiyle transit beyannameleri tamamen dijitalleşerek sınır kapılarındaki bekleme sürelerini minimize etmeyi hedefliyor.",
+        tarih: 'Ekim 2026',
+        kaynak: 'T.C. Ticaret Bakanlığı',
+        link: 'https://ticaret.gov.tr'
+      },
+      {
+        kategori: 'Hava Kargo & E-Ticaret',
+        baslik: 'Küresel Sınır Ötesi E-Ticaret ve Hava Kargo Kapasite Artışı',
+        ozet: 'İstanbul Havalimanı (İGA) merkezli hava kargo operasyonlarında e-ticaret kaynaklı ekspres sevkiyat hacimleri yıllık %28 artışla Orta Doğu ve Avrupa aktarma liderliğini pekiştirdi.',
+        tarih: 'Ekim 2026',
+        kaynak: 'IATA & Turkish Cargo',
+        link: 'https://www.turkishcargo.com.tr'
+      }
+    ];
+
+    async function fetchLogisticsNews() {
+      const indicator = document.getElementById('newsSyncIndicator');
+      if (indicator) indicator.textContent = '🔄 Yükleniyor...';
+
+      try {
+        const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=Lojistik_Gundemi';
+        const res = await fetch(url);
+        const rawText = await res.text();
+        const json = JSON.parse(rawText.substring(47).slice(0, -2));
+
+        const rows = json.table.rows;
+        if (rows && rows.length > 0) {
+          renderLiveLogisticsNews(rows);
+          if (indicator) indicator.textContent = '✅ E-Tablo Güncel (' + new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'}) + ')';
+        } else {
+          renderDefaultLogisticsNews();
+          if (indicator) indicator.textContent = '⚡ Varsayılan';
+        }
+      } catch (err) {
+        console.warn('Lojistik haberleri E-Tablo hatası veya çevrim dışı:', err);
+        renderDefaultLogisticsNews();
+        if (indicator) indicator.textContent = '⚡ Yerel Veri Aktif';
+      }
+    }
+
+    function renderDefaultLogisticsNews() {
+      renderNewsArray(DEFAULT_LOGISTICS_NEWS);
+    }
+
+    function renderLiveLogisticsNews(rows) {
+      const newsItems = [];
+      rows.forEach(r => {
+        const c = r.c;
+        if (!c || !c[1]) return;
+        const kategori = c[0] && c[0].v ? c[0].v : 'Lojistik Gündemi';
+        const baslik = c[1] && c[1].v ? c[1].v : '';
+        const ozet = c[2] && c[2].v ? c[2].v : '';
+        const tarih = c[3] && (c[3].f || c[3].v) ? (c[3].f || c[3].v) : 'Güncel';
+        const kaynak = c[4] && c[4].v ? c[4].v : 'Sektör Kaynağı';
+        const link = c[5] && c[5].v ? c[5].v : '';
+
+        if (baslik) {
+          newsItems.push({ kategori, baslik, ozet, tarih, kaynak, link });
+        }
+      });
+
+      if (newsItems.length === 0) {
+        renderDefaultLogisticsNews();
+      } else {
+        renderNewsArray(newsItems);
+      }
+    }
+
+    function renderNewsArray(items) {
+      const container = document.getElementById('liveNewsContainer');
+      if (!container) return;
+      const borderColors = ['#0284c7', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899'];
+      const badgeClasses = ['badge-primary', 'badge-success', 'badge-purple', 'badge-warning', 'badge-primary'];
+
+      let html = '';
+      items.forEach((item, idx) => {
+        const bColor = borderColors[idx % borderColors.length];
+        const bClass = badgeClasses[idx % badgeClasses.length];
+        html += `
+          <div class="card" style="background: var(--news-card-bg); border-top: 3px solid ${bColor}; margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <span class="badge ${bClass}">${escapeHtml(item.kategori)}</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">${escapeHtml(item.tarih)}</span>
+            </div>
+            <h3 style="font-size: 1.05rem; font-weight: 800; margin: 10px 0 6px 0;">${escapeHtml(item.baslik)}</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">${escapeHtml(item.ozet)}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border-top: 1px solid var(--card-border); padding-top: 10px;">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Kaynak: ${escapeHtml(item.kaynak)}</span>
+              ${item.link && item.link !== '#' ? `<a href="${escapeHtml(item.link)}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" style="font-size: 0.75rem;">Sektör İncelemesi ↗</a>` : ''}
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function switchAcademicSubTab(subId, btn) {
+      document.querySelectorAll('.academic-sub-pane').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('#tab-academic .subnav-tab-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById('sub-academic-' + subId);
+      if (target) target.style.display = 'block';
+      if (btn) btn.classList.add('active');
+
+      if (subId === 'news-sub') {
+        fetchLogisticsNews();
+      }
+    }
+
+    /* SPOR TAKİBİ İÇ SEKMELERİ (SUB-TABS) */
+    function switchSportSubTab(subId, btn) {
+      document.querySelectorAll('.sport-sub-pane').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('#tab-sport .subnav-tab-btn').forEach(b => b.classList.remove('active'));
+
+      const target = document.getElementById('sub-sport-' + subId);
+      if (target) target.style.display = 'block';
+      if (btn) btn.classList.add('active');
+    }
+
+    /* =========================================================
+       DERS PROGRAMI VERİLERİ & AKILLI DERS WIDGET'I
+       ========================================================= */
+    const WEEKLY_SCHEDULE = {
+      1: { name: "Pazartesi", isOffDay: true, nextDay: 2 },
+      2: {
+        name: "Salı", endHour: 17, endMin: 0, nextDay: 3,
+        classes: [{
+          title: "Pazarlama İlkeleri", time: "13:00 - 17:00", prof: "Doç. Dr. Hakan Kaçak", room: "201",
+          folder: "https://drive.google.com/drive/folders/1GP9k_lxwe81zrbiGZWorSCCKoyWUCB61"
+        }]
+      },
+      3: {
+        name: "Çarşamba", endHour: 17, endMin: 0, nextDay: 4,
+        classes: [
+          { title: "İşletme Finansmanı", time: "09:30 - 13:00", prof: "Doç. Dr. İlkur Elif Kandil Göker", room: "203", folder: "https://drive.google.com/drive/folders/1lTZGnbadvyiIL0zxHXzSofOQPGBbtHzI" },
+          { title: "Ulaştırma ve Lojistik Terminolojisi", time: "14:00 - 17:00", prof: "Dr. Öğr. Üyesi Bükre Doğaner", room: "203", folder: "https://drive.google.com/drive/folders/1zs-HQVxWwwrznzUs2LBND0kJxPN8cPhS" }
+        ]
+      },
+      4: {
+        name: "Perşembe", endHour: 17, endMin: 0, nextDay: 5,
+        classes: [
+          { title: "Uluslararası İktisat I", time: "10:30 - 12:30", prof: "Dr. Öğr. Üyesi Duhan Kalkan", room: "203", folder: "https://drive.google.com/drive/folders/1Kw2S1dBHIP6bwhRiF8_6_CbpbqQaIeDd" },
+          { title: "İstatistik I", time: "13:00 - 17:00", prof: "Dr. Öğr. Üyesi Sinem Kozpınar", room: "203", folder: "https://drive.google.com/drive/folders/1HGq8fCSVxbRtKkQBWNAy8G2MmfO0fllW" }
+        ]
+      },
+      5: {
+        name: "Cuma", endHour: 17, endMin: 0, nextDay: 2,
+        classes: [
+          { title: "İktisadi Sistemler, Kurumlar ve Piyasalar", time: "09:30 - 12:30", prof: "Doç. Dr. Nadide Gülbay Yiğiteli", room: "203", folder: "https://drive.google.com/drive/folders/1iKTxH_VmuTPFLoOU2pm8ueAT_p-0Ei3N" },
+          { title: "Borçlar Hukuku", time: "14:00 - 17:00", prof: "Doç. Dr. Yıldız Abik", room: "203", folder: "https://drive.google.com/drive/folders/12e6RYKkAKxPrgAyJUdnMaMdFkeaesUSX" }
+        ]
+      },
+      6: { name: "Cumartesi", isWeekend: true, nextDay: 2 },
+      0: { name: "Pazar", isWeekend: true, nextDay: 2 }
+    };
+
+    function renderSmartClassWidget() {
+      const container = document.getElementById('smartClassContent');
+      const headerText = document.getElementById('classWidgetHeader');
+      const dayBadge = document.getElementById('todayDayBadge');
+      const clockDisplay = document.getElementById('currentClockDisplay');
+      if (!container) return;
+
+      const now = new Date();
+      const currentDay = now.getDay();
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+
+      const hStr = String(currentHour).padStart(2, '0');
+      const mStr = String(currentMin).padStart(2, '0');
+      if (clockDisplay) clockDisplay.textContent = `${hStr}:${mStr}`;
+
+      const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+      if (dayBadge) dayBadge.textContent = dayNames[currentDay];
+
+      const todayData = WEEKLY_SCHEDULE[currentDay];
+      let isClassDay = !todayData.isOffDay && !todayData.isWeekend;
+      let classesFinished = false;
+
+      if (isClassDay) {
+        if (currentHour > todayData.endHour || (currentHour === todayData.endHour && currentMin >= todayData.endMin)) {
+          classesFinished = true;
+        }
+      }
+
+      if (isClassDay && !classesFinished) {
+        headerText.innerHTML = `⚡ BUGÜNÜN DERSLERİ (${todayData.name})`;
+        let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+        todayData.classes.forEach(c => {
+          html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--surface); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+              <div>
+                <div style="font-size: 1.2rem; font-weight: 800; color: var(--text);">${c.title}</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 4px;">
+                  ⏰ <strong>${c.time}</strong> • ${c.prof} • Sınıf: <strong>${c.room}</strong>
+                </div>
+              </div>
+              <a href="${c.folder}" target="_blank" class="btn btn-success" style="font-size: 0.9rem;">
+                📁 Slayt Klasörünü Aç ↗
+              </a>
+            </div>
+          `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+      } else {
+        const nextDayNum = todayData.nextDay;
+        const nextDayData = WEEKLY_SCHEDULE[nextDayNum];
+        let statusTitle = todayData.isWeekend ? "🌴 Hafta Sonu Dinlenme Modu!" : (todayData.isOffDay ? "☕ Pazartesi: Boş Gün!" : `✨ ${todayData.name} gününün dersleri tamamlandı!`);
+
+        headerText.innerHTML = `🔮 SIRADAKİ DERS GÜNÜ: ${nextDayData.name}`;
+
+        let html = `
+          <div style="background: var(--surface); padding: 14px 16px; border-radius: 12px; border: 1px solid var(--card-border);">
+            <div style="font-size: 0.9rem; color: var(--warning); font-weight: 700; margin-bottom: 10px;">
+              ${statusTitle} Sıradaki ders gününüz: <strong>${nextDayData.name}</strong>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+        `;
+
+        nextDayData.classes.forEach(c => {
+          html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--card-border);">
+              <div>
+                <strong style="color: var(--text); font-size: 1.05rem;">${c.title}</strong>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                  ⏰ ${c.time} • ${c.prof} • Sınıf: ${c.room}
+                </div>
+              </div>
+              <a href="${c.folder}" target="_blank" class="btn btn-secondary btn-sm">
+                📁 Klasörü Önceden Aç ↗
+              </a>
+            </div>
+          `;
+        });
+
+        html += '</div></div>';
+        container.innerHTML = html;
+      }
+    }
+
+    /* =========================================================
+       TARİH PARSE VE GERİ SAYIM MOTORU
+       ========================================================= */
+    function parseSafeDate(dStr) {
+      if (!dStr) return null;
+      if (typeof dStr === 'string' && dStr.startsWith('Date(')) {
+        const m = dStr.match(/Date\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?(?:,\s*(\d+))?/);
+        if (m) {
+          const h = m[4] !== undefined ? parseInt(m[4]) : 23;
+          const min = m[5] !== undefined ? parseInt(m[5]) : 59;
+          return new Date(parseInt(m[1]), parseInt(m[2]), parseInt(m[3]), h, min, 0);
+        }
+      }
+      if (typeof dStr === 'string' && (dStr.includes('T') || dStr.includes(':'))) {
+        const p = new Date(dStr);
+        if (!isNaN(p.getTime())) return p;
+      }
+      if (typeof dStr === 'string') {
+        const m2 = dStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (m2) {
+          return new Date(parseInt(m2[1]), parseInt(m2[2]) - 1, parseInt(m2[3]), 23, 59, 59);
+        }
+      }
+      const parsed = new Date(dStr);
+      return isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    function calculateTimeRemaining(deadlineStr) {
+      const d = parseSafeDate(deadlineStr);
+      if (!d) return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+      const total = d.getTime() - Date.now();
+      if (total <= 0) {
+        return { total: 0, days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+      }
+      const seconds = Math.floor((total / 1000) % 60);
+      const minutes = Math.floor((total / 1000 / 60) % 60);
+      const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+      const days = Math.floor(total / (1000 * 60 * 60 * 24));
+      return { total, days, hours, minutes, seconds, expired: false };
+    }
+
+    /* DEFAULT SINAV VE QUIZLER (RESMİ KAYNAK LİNKLERİYLE) */
+    const DEFAULT_EXAMS = [
+      {
+        id: "vize_guz_2026",
+        course: "Lojistik Yönetimi (2. Sınıf)",
+        title: "Güz Dönemi Vize Sınavları",
+        deadline: "2026-11-20T09:00:00",
+        link: "https://ubf.ankara.edu.tr",
+        sourceLink: "https://ubf.ankara.edu.tr",
+        sourceText: "Fakülte Duyurusu",
+        note: "Ankara Üniv. Uygulamalı Bilimler Fakültesi resmi vize takvimi."
+      },
+      {
+        id: "quiz_ydi201_unit1",
+        course: "YDİ201 Temel Yabancı Dil (İngilizce)",
+        title: "Quiz 1 Unit 1 Sınavı",
+        deadline: "2026-10-10T13:30:00",
+        link: "https://ekampus.ankara.edu.tr/mod/quiz/view.php?id=42241",
+        sourceLink: "https://mail.google.com/mail/?authuser=emr.tambas@gmail.com#all/thread-f:1878564737633263356|msg-f:1878564737633263356",
+        sourceText: "E-Posta (ankuzefdestek)",
+        note: "Kapanış: 10 Ekim 13:30 (Sona erdi)."
+      }
+    ];
+
+    function getExams() {
+      const stored = safeGet('emir_hub_exams');
+      return (stored && stored.length > 0) ? stored.filter(e => e.id !== 'quiz_ydi201_unit2') : DEFAULT_EXAMS;
+    }
+
+    function saveExams(list) {
+      safeSet('emir_hub_exams', list);
+      renderExamCountdowns();
+    }
+
+    function renderExamCountdowns() {
+      const exams = getExams();
+      const widgetContainer = document.getElementById('activeExamsContainer');
+      const allExamsContainer = document.getElementById('allExamsFullList');
+
+      let widgetHtml = "";
+      let fullHtml = "";
+
+      exams.forEach((ex, idx) => {
+        const rem = calculateTimeRemaining(ex.deadline);
+        const deadlineDate = parseSafeDate(ex.deadline) || new Date();
+        const dateStr = deadlineDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+
+        let badgeClass = "badge-primary";
+        let statusText = "Yaklaşıyor";
+        if (rem.expired) {
+          badgeClass = "badge-danger";
+          statusText = "Sona Erdi";
+        } else if (rem.days === 0 && rem.hours < 24) {
+          badgeClass = "badge-warning";
+          statusText = "🚨 Son 24 Saat!";
+        }
+
+        // Widget Compact View
+        if (idx < 2) {
+          widgetHtml += `
+            <div style="background: var(--surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                <div>
+                  <div style="font-size: 0.78rem; color: var(--primary); font-weight: 700;">${ex.course}</div>
+                  <strong style="font-size: 0.98rem; color: var(--text);">${ex.title}</strong>
+                </div>
+                <span class="badge ${badgeClass}">${statusText}</span>
+              </div>
+
+              ${rem.expired ? `
+                <div style="color: var(--danger); font-size: 0.82rem; font-weight: 700; margin: 8px 0;">
+                  ⚠️ Bu sınavın süresi doldu.
+                </div>
+              ` : `
+                <div class="countdown-grid">
+                  <div class="countdown-box">
+                    <div class="countdown-num">${rem.days}</div>
+                    <div class="countdown-label">GÜN</div>
+                  </div>
+                  <div class="countdown-box">
+                    <div class="countdown-num">${String(rem.hours).padStart(2,'0')}</div>
+                    <div class="countdown-label">SAAT</div>
+                  </div>
+                  <div class="countdown-box">
+                    <div class="countdown-num">${String(rem.minutes).padStart(2,'0')}</div>
+                    <div class="countdown-label">DAKİKA</div>
+                  </div>
+                  <div class="countdown-box">
+                    <div class="countdown-num">${String(rem.seconds).padStart(2,'0')}</div>
+                    <div class="countdown-label">SANİYE</div>
+                  </div>
+                </div>
+              `}
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px; flex-wrap: wrap; gap: 6px;">
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Bitiş: ${dateStr}</span>
+                <div style="display: flex; gap: 6px;">
+                  ${ex.sourceLink ? `<a href="${ex.sourceLink}" target="_blank" class="btn btn-source btn-sm" title="Haberin kaynağına git">📌 ${ex.sourceText || 'Kaynak'} ↗</a>` : ''}
+                  ${ex.link ? `<a href="${ex.link}" target="_blank" class="btn btn-secondary btn-sm">Sınava Git ↗</a>` : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Full Tab View (Akademik Takip)
+        fullHtml += `
+          <div class="card" style="margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+              <div>
+                <span class="badge badge-primary" style="margin-bottom: 6px;">${ex.course}</span>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text);">${ex.title}</h3>
+              </div>
+              <span class="badge ${badgeClass}">${statusText}</span>
+            </div>
+
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 8px 0;">
+              ${ex.note || 'Resmi akademik değerlendirme takvimi.'}
+            </p>
+
+            ${rem.expired ? `
+              <div style="color: var(--danger); font-size: 0.88rem; font-weight: 700; padding: 10px; background: rgba(239,68,68,0.08); border-radius: 8px;">
+                ⚠️ Sınav süresi dolmuştur.
+              </div>
+            ` : `
+              <div class="countdown-grid">
+                <div class="countdown-box">
+                  <div class="countdown-num">${rem.days}</div>
+                  <div class="countdown-label">GÜN</div>
+                </div>
+                <div class="countdown-box">
+                  <div class="countdown-num">${String(rem.hours).padStart(2,'0')}</div>
+                  <div class="countdown-label">SAAT</div>
+                </div>
+                <div class="countdown-box">
+                  <div class="countdown-num">${String(rem.minutes).padStart(2,'0')}</div>
+                  <div class="countdown-label">DAKİKA</div>
+                </div>
+                <div class="countdown-box">
+                  <div class="countdown-num">${String(rem.seconds).padStart(2,'0')}</div>
+                  <div class="countdown-label">SANİYE</div>
+                </div>
+              </div>
+            `}
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border-top: 1px solid var(--card-border); padding-top: 12px; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">⏰ Son Tarih: <strong>${dateStr}</strong></span>
+              <div style="display: flex; gap: 6px;">
+                ${ex.sourceLink ? `<a href="${ex.sourceLink}" target="_blank" class="btn btn-source btn-sm">📌 ${ex.sourceText || 'Kaynak'} ↗</a>` : ''}
+                ${ex.link ? `<a href="${ex.link}" target="_blank" class="btn btn-secondary btn-sm">Sınava Git ↗</a>` : ''}
+                <button class="btn btn-danger btn-sm" onclick="deleteExam(${idx})">Sil</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      if (widgetContainer) widgetContainer.innerHTML = widgetHtml;
+      if (allExamsContainer) allExamsContainer.innerHTML = fullHtml;
+    }
+
+    function openAddExamModal() {
+      document.getElementById('addExamModal').style.display = 'flex';
+    }
+
+    function closeAddExamModal() {
+      document.getElementById('addExamModal').style.display = 'none';
+    }
+
+    function saveNewExam() {
+      const course = document.getElementById('examCourseInput').value.trim();
+      const title = document.getElementById('examTitleInput').value.trim();
+      const deadline = document.getElementById('examDeadlineInput').value;
+      const link = document.getElementById('examLinkInput').value.trim();
+      const sourceLink = document.getElementById('examSourceInput').value.trim();
+
+      if (!course || !title || !deadline) {
+        alert("Lütfen ders adını, sınav başlığını ve tarihini girin.");
+        return;
+      }
+
+      const list = getExams();
+      list.push({
+        id: "custom_" + Date.now(),
+        course,
+        title,
+        deadline,
+        link: link || "https://ekampus.ankara.edu.tr",
+        sourceLink: sourceLink || "",
+        sourceText: "Kaynak İleti",
+        note: "Manuel eklenen sınav / quiz hatırlatıcısı."
+      });
+
+      saveExams(list);
+      closeAddExamModal();
+      showToast("Yeni sınav ve kaynak bağlantısı başarıyla eklendi!");
+
+      document.getElementById('examCourseInput').value = "";
+      document.getElementById('examTitleInput').value = "";
+      document.getElementById('examDeadlineInput').value = "";
+      document.getElementById('examLinkInput').value = "";
+      document.getElementById('examSourceInput').value = "";
+    }
+
+    function deleteExam(idx) {
+      if (!confirm("Bu sınav kaydını silmek istediğinize emin misiniz?")) return;
+      const list = getExams();
+      list.splice(idx, 1);
+      saveExams(list);
+      showToast("Sınav kaydı silindi.");
+    }
+
+    /* =========================================================
+       SPOR TAKİBİ: ANTRENMAN GÜNLÜĞÜ + FORM REHBERİ
+       ========================================================= */
+    let setCount = 0;
+
+    function addNewSetRow(weight = 60, reps = 10) {
+      setCount++;
+      const container = document.getElementById('dynamicSetsContainer');
+      if (!container) return;
+      const row = document.createElement('div');
+      row.className = 'set-row';
+      row.id = 'setRow_' + setCount;
+      row.innerHTML = `
+        <span style="font-weight: 700; color: var(--text-muted); text-align: center;">${setCount}</span>
+        <input type="number" class="set-w" value="${weight}" placeholder="kg" step="0.5">
+        <input type="number" class="set-r" value="${reps}" placeholder="tekrar">
+        <button type="button" class="btn btn-danger btn-sm" onclick="removeSetRow('${row.id}')" style="padding: 4px;">✕</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function removeSetRow(rowId) {
+      const row = document.getElementById(rowId);
+      if (row) row.remove();
+      reindexSets();
+    }
+
+    function reindexSets() {
+      const rows = document.querySelectorAll('#dynamicSetsContainer .set-row');
+      setCount = 0;
+      rows.forEach((r, idx) => {
+        setCount = idx + 1;
+        r.id = 'setRow_' + setCount;
+        r.querySelector('span').textContent = setCount;
+      });
+    }
+
+    function resetSets() {
+      const container = document.getElementById('dynamicSetsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      setCount = 0;
+      addNewSetRow(60, 10);
+      addNewSetRow(65, 8);
+      addNewSetRow(70, 6);
+    }
+
+    function saveWorkoutSession() {
+      const exercise = document.getElementById('exerciseInput').value;
+      const note = document.getElementById('workoutNoteInput').value.trim();
+      const rows = document.querySelectorAll('#dynamicSetsContainer .set-row');
+
+      if (rows.length === 0) {
+        alert('Lütfen en az 1 set ekleyin.');
+        return;
+      }
+
+      const sets = [];
+      rows.forEach(r => {
+        const w = r.querySelector('.set-w').value || 0;
+        const rep = r.querySelector('.set-r').value || 0;
+        sets.push({ weight: parseFloat(w), reps: parseInt(rep) });
+      });
+
+      const session = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+        exercise,
+        sets,
+        note
+      };
+
+      const history = safeGet('emir_workouts') || [];
+      history.unshift(session);
+      safeSet('emir_workouts', history);
+
+      document.getElementById('workoutNoteInput').value = '';
+      resetSets();
+      renderWorkoutHistory();
+      showToast('Antrenman kaydı başarıyla eklendi!');
+    }
+
+    function renderWorkoutHistory() {
+      const view = document.getElementById('workoutHistoryView');
+      if (!view) return;
+      const history = safeGet('emir_workouts') || [];
+
+      if (history.length === 0) {
+        view.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 30px 10px; font-size: 0.9rem;">
+            🏋️ Henüz kayıtlı antrenmanınız yok.<br>Spora başladığınızda tüm setleriniz burada listelenecek!
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      history.forEach(item => {
+        const setDetails = item.sets.map((s, i) => `Set ${i + 1}: ${s.weight}kg x ${s.reps}`).join(' • ');
+        html += `
+          <div style="background: var(--item-bg); border: 1px solid var(--item-border); padding: 12px 14px; border-radius: 12px; margin-bottom: 10px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;">
+              <span style="color: var(--primary);">${item.exercise}</span>
+              <span style="font-size: 0.78rem; color: var(--text-muted);">${item.date}</span>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text); margin-top: 4px;">${setDetails}</div>
+            ${item.note ? `<div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; font-style: italic;">📝 "${item.note}"</div>` : ''}
+          </div>
+        `;
+      });
+      view.innerHTML = html;
+    }
+
+    function clearWorkouts() {
+      if (confirm('Tüm antrenman geçmişini silmek istediğinize emin misiniz?')) {
+        safeSet('emir_workouts', []);
+        renderWorkoutHistory();
+        showToast('Antrenman geçmişi temizlendi.');
+      }
+    }
+
+    function filterGuide() {
+      const q = document.getElementById('searchGuide').value.toLowerCase();
+      const cards = document.querySelectorAll('.guide-card');
+      cards.forEach(c => {
+        const text = (c.getAttribute('data-name') + ' ' + c.innerText).toLowerCase();
+        c.style.display = text.includes(q) ? 'block' : 'none';
+      });
+    }
+
+    /* =========================================================
+       BURSLAR, NOTLAR VE E-TABLO SENKRONİZASYONU
+       ========================================================= */
+    function getNotes() {
+      return safeGet('emir_notes') || [
+        "REV Vakfı online burs formunu doldur (Son: 15 Ekim)",
+        "Pazarlama İlkeleri 1. ve 2. hafta ders slaytlarını incele",
+        "İngilizce ekampus duyurularını ve quizlerini düzenli kontrol et"
+      ];
+    }
+
+    function renderNotes() {
+      const quickPreview = document.getElementById('quickNotesPreview');
+      const notes = getNotes();
+      if (quickPreview) {
+        if (notes.length === 0) {
+          quickPreview.innerHTML = "Henüz kayıtlı bir notunuz yok.";
+        } else {
+          quickPreview.innerHTML = notes.slice(0, 2).map(n => `• ${n}`).join('<br>');
+        }
+      }
+    }
+
+    function addQuickNote() {
+      const input = document.getElementById('quickNoteInput');
+      const val = input.value.trim();
+      if (!val) return;
+      const notes = getNotes();
+      notes.unshift(val);
+      safeSet('emir_notes', notes);
+      input.value = '';
+      renderNotes();
+      showToast('Hızlı not kaydedildi.');
+    }
+
+    const SHEET_ID = '1cHBSpX06AzC2P0nd1MnybPT3V1V2zz2Ew5aCA70-YAU';
+
+    async function fetchSheetData() {
+      const indicator = document.getElementById('syncIndicator');
+      const dashStatus = document.getElementById('dashboardSyncStatus');
+      if (indicator) indicator.textContent = '🔄 Senkronize ediliyor...';
+
+      try {
+        const url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=Duyurular_Ve_Burslar';
+        const res = await fetch(url);
+        const text = await res.text();
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+
+        const rows = json.table.rows;
+        if (rows && rows.length > 0) {
+          renderLiveAnnouncements(rows);
+          syncSheetExams(rows);
+          if (indicator) indicator.textContent = '✅ E-Tablo Güncel (' + new Date().toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'}) + ')';
+          if (dashStatus) dashStatus.textContent = '✅ E-Tablo Senkron';
+        }
+      } catch (err) {
+        console.warn('Sheets fetch error or offline, fallback data active:', err);
+        if (indicator) indicator.textContent = '⚡ Yerel Veri Aktif';
+        if (dashStatus) dashStatus.textContent = '⚡ Çevrim Dışı';
+      }
+    }
+
+    function syncSheetExams(rows) {
+      const customExams = safeGet('emir_custom_exams') || [];
+      const sheetExams = [];
+      rows.forEach(r => {
+        const c = r.c;
+        if (!c || !c[1]) return;
+        const kategori = (c[0] ? c[0].v : '').toLowerCase();
+        const baslik = c[1] ? c[1].v : '';
+        const sonTarih = c[2] ? (c[2].f || c[2].v) : '';
+        const aciklama = c[3] ? c[3].v : '';
+        const link = c[5] ? c[5].v : '';
+
+        // SADECE Sınav, Quiz ve Akademik başlıkları al; Bursları buraya alma!
+        const isExam = kategori.includes('sınav') || kategori.includes('sinav') || kategori.includes('quiz') || kategori.includes('akademik');
+        if (isExam && sonTarih) {
+          let dl = String(sonTarih);
+          if (dl.length === 10) dl += 'T23:59:00';
+          sheetExams.push({
+            id: 'sheet_' + baslik.replace(/\s+/g, '_'),
+            course: c[0] ? c[0].v : 'Akademik Sınav',
+            title: baslik,
+            deadline: dl,
+            link: link || 'https://ubf.ankara.edu.tr',
+            sourceLink: link || 'https://ubf.ankara.edu.tr',
+            sourceText: 'E-Tablo Kaynağı',
+            note: aciklama
+          });
+        }
+      });
+
+      const defaultItems = DEFAULT_EXAMS.filter(d => !sheetExams.some(s => s.title.includes(d.title) || d.title.includes(s.title)));
+      const all = [...sheetExams, ...defaultItems, ...customExams];
+      all.sort((a, b) => {
+        const remA = calculateTimeRemaining(a.deadline);
+        const remB = calculateTimeRemaining(b.deadline);
+        if (remA.expired && !remB.expired) return 1;
+        if (!remA.expired && remB.expired) return -1;
+        return remA.total - remB.total;
+      });
+
+      safeSet('emir_hub_exams', all);
+      renderExamCountdowns();
+    }
+
+    function renderLiveAnnouncements(rows) {
+      const container = document.getElementById('liveAnnouncementsContainer');
+      const dashBursContainer = document.getElementById('dashboardBursWidgetContainer');
+      if (!container) return;
+
+      let fullBursHtml = '';
+      let widgetBursHtml = '';
+
+      rows.forEach((r, idx) => {
+        const c = r.c;
+        if (!c || !c[1]) return;
+        const kat = (c[0] ? c[0].v : '').toLowerCase();
+        const baslik = c[1] ? c[1].v : '';
+        const sonTarih = c[2] ? (c[2].f || c[2].v) : '';
+        const aciklama = c[3] ? c[3].v : '';
+        const durum = c[4] ? c[4].v : 'Aktif';
+        const link = c[5] ? c[5].v : '';
+
+        // Full Tab View (Akademik Takip -> Burslar)
+        fullBursHtml += `
+          <div style="background: var(--item-bg); border: 1px solid var(--item-border); padding: 14px; border-radius: 12px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; align-items: center; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 1rem; color: var(--text);">${baslik}</span>
+              <span class="badge ${durum === 'Acil' ? 'badge-danger' : 'badge-warning'}">Son: ${sonTarih}</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; line-height: 1.4;">
+              ${aciklama}
+            </p>
+            ${link ? `<div style="margin-top: 8px;"><a href="${link}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem;">Detay & Başvuru Portali ↗</a></div>` : ''}
+          </div>
+        `;
+
+        // Compact Widget View (Hızlı Özet -> Burslar)
+        if (idx < 2) {
+          widgetBursHtml += `
+            <div style="background: var(--surface); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 6px;">
+                <strong style="color: var(--text); font-size: 0.95rem;">${baslik}</strong>
+                <span class="badge ${durum === 'Acil' ? 'badge-danger' : 'badge-warning'}">${sonTarih}</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; line-height: 1.3;">
+                ${aciklama.length > 80 ? aciklama.substring(0, 80) + '...' : aciklama}
+              </div>
+              ${link ? `<div style="margin-top: 8px; display: flex; justify-content: flex-end;"><a href="${link}" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 4px 10px;">Başvuru Portali ↗</a></div>` : ''}
+            </div>
+          `;
+        }
+      });
+
+      if (fullBursHtml) container.innerHTML = fullBursHtml;
+      if (dashBursContainer && widgetBursHtml) dashBursContainer.innerHTML = widgetBursHtml;
+    }
+
+    
+    
+    /* GOOGLE FORM İLE GEMINI OTONOM GÖREV KÖPRÜSÜ */
+    const DEFAULT_EMIR_FORM_URL = "https://docs.google.com/forms/d/1j3NMW3oALC-8KsKOqaqCVe7gN671LuvIQcEHZ4QFHdo/viewform";
+
+    function getActiveFormUrl() {
+      const custom = safeGet('emir_google_form_url');
+      // If custom link contains pub or error link, prefer real form URL
+      if (!custom || custom.includes('/pub') || !custom.includes('docs.google.com/forms')) {
+        return DEFAULT_EMIR_FORM_URL;
+      }
+      return custom;
+    }
+
+    function openFormSettings() {
+      const modal = document.getElementById('formModal');
+      const input = document.getElementById('googleFormUrlInput');
+      if (input) input.value = getActiveFormUrl();
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeFormSettings() {
+      const modal = document.getElementById('formModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function saveFormUrl() {
+      const input = document.getElementById('googleFormUrlInput');
+      const url = input.value.trim();
+      if (!url) {
+        alert('Lütfen geçerli bir Google Form adresi girin.');
+        return;
+      }
+      safeSet('emir_google_form_url', url);
+      closeFormSettings();
+      showToast('Google Form bağlantısı başarıyla kaydedildi!');
+    }
+
+    function openDirectForm(e) {
+      if (e) e.preventDefault();
+      window.open(getActiveFormUrl(), '_blank');
+    }
+
+    async function sendTaskViaGoogleForm() {
+      const taskInput = document.getElementById('geminiTaskInput');
+      const taskText = taskInput.value.trim();
+      if (!taskText) {
+        alert('Lütfen bir görev veya talimat yazın.');
+        return;
+      }
+
+      const formUrl = safeGet('emir_google_form_url');
+      if (!formUrl) {
+        openFormSettings();
+        return;
+      }
+
+      // Check if it is a prefilled link with entry.XXXX
+      const entryMatch = formUrl.match(/(entry\.\d+)=/);
+      
+      if (entryMatch) {
+        // 100% SILENT BACKGROUND SUBMISSION (NO REDIRECT!)
+        const entryName = entryMatch[1];
+        let formActionUrl = formUrl.split('?')[0];
+        formActionUrl = formActionUrl.replace('/viewform', '/formResponse');
+
+        showToast('🚀 Görev arka planda Gemini\'ye iletiliyor...');
+
+        const formData = new FormData();
+        formData.append(entryName, taskText);
+
+        try {
+          await fetch(formActionUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData
+          });
+
+          // Save to local notes list
+          const notes = getNotes();
+          notes.unshift('🤖 Görev: ' + taskText);
+          safeSet('emir_notes', notes);
+          renderNotes();
+
+          taskInput.value = '';
+          showToast('✅ Görev iletildi! Sayfadan ayrılmadan başarıyla gönderildi.');
+        } catch (err) {
+          console.warn('Background submit error:', err);
+          showToast('⚠️ Gönderilirken sorun oluştu, form sayfası açılıyor...');
+          window.open(formUrl.replace(/entry\.\d+=.*/, entryName + '=' + encodeURIComponent(taskText)), '_blank');
+        }
+      } else {
+        // If standard link, prefill or open directly
+        const notes = getNotes();
+        notes.unshift('📋 Görev: ' + taskText);
+        safeSet('emir_notes', notes);
+        renderNotes();
+
+        showToast('Görev formu açılıyor...');
+        window.open(formUrl, '_blank');
+        taskInput.value = '';
+      }
+    }
+
+
+    /* BAŞLATMA VE ZAMANLAYICILAR */
+    window.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      renderSmartClassWidget();
+      renderExamCountdowns();
+      fetchSheetData();
+      fetchLogisticsNews();
+      resetSets();
+      renderWorkoutHistory();
+      renderNotes();
+
+      setInterval(() => {
+        renderExamCountdowns();
+      }, 1000);
+
+      setInterval(() => {
+        renderSmartClassWidget();
+      }, 30000);
+    });
+  </script>
+</body>
+</html>
