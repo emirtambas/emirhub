@@ -21,19 +21,14 @@ jobs:
           python-version: '3.x'
 
       - name: İndirme Aracını Kur
-        run: pip install gdown
+        run: pip install --upgrade gdown
 
-      - name: Drive Klasöründen En Yeni Paketi Çek
+      - name: Drive Klasöründen Paketi Çek ve Aç
         run: |
-          gdown --folder "https://drive.google.com/drive/folders/1zGownBbhvEktZpOa1P9478fpt0o1nUxG" -O ./drive_download --remaining-ok
-          NEWEST_ZIP=$(ls -t ./drive_download/*.zip 2>/dev/null | head -1)
-          if [ -n "$NEWEST_ZIP" ]; then
-            echo "En yeni paket bulundu: $NEWEST_ZIP"
-            unzip -o "$NEWEST_ZIP" -d .
-            rm -rf ./drive_download
-          fi
+          gdown --folder "https://drive.google.com/drive/folders/1zGownBbhvEktZpOa1P9478fpt0o1nUxG" --remaining-ok
+          find . -name "*.zip" -type f -exec unzip -o {} -d . \;
 
-      - name: Değişiklik Varsa Otomatik Commit ve Push Yap
+      - name: Değişiklik Varsa GitHub'a Otomatik Yükle
         run: |
           git config --global user.name "EmirHub Bot"
           git config --global user.email "bot@emirhub.local"
